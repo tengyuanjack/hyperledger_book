@@ -1,0 +1,43 @@
+SignedProposal: {
+	ProposalBytes (Proposal) : {
+		Header: {
+			ChannelHeader: {
+				Type: "HeaderType_ENDORSER_TRANSACTION",
+				TxId: TxId,
+				Timestamp: Timestamp,
+				ChannelId: ChannelId,
+				Extension (ChaincodeHeaderExtendsion) : {
+					PayloadVisibility: PayloadVisibility,
+					ChaincodeId: {
+						Path: Path,
+						Name: Name,
+						Version: Version
+					}
+				},
+				Epoch: Epoch
+			},
+			SignatureHeader: {
+				Creator: Creator,
+				Nonce: Nonce
+			}
+		},
+		Payload: {
+			ChaincodeProposalPayload: {
+				Input (ChaincodeInvocationSpec) : {
+					ChaincodeSpec: {
+						Type: Type,
+						ChaincodeId: {
+							Name: Name
+						},
+						Input (ChaincodeInput) {
+							Args:[]
+						}
+					}
+				},
+				TransientMap: TransientMap
+			}
+		}
+	},
+	Signature: Signature
+}
+
