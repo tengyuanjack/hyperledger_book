@@ -1,0 +1,99 @@
+Envelope: {
+	Payload: {
+		Header: {
+			ChannelHeader: {
+				Type: "HeaderType_ENDORSER_TRANSACTION",
+				TxId: TxId,
+				Timestamp: Timestamp,
+				ChannelId: ChannelId,
+				Extension (ChaincodeHeaderExtendsion) : {
+					PayloadVisibility: PayloadVisibility,
+					ChaincodeId: {
+						Path: Path,
+						Name: Name,
+						Version: Version
+					}
+				},
+				Epoch: Epoch
+			},
+			SignatureHeader: {
+				Creator: Creator,
+				Nonce: Nonce
+			}
+		},
+		Data (Transaction) : {
+			TransactionAction: [
+				Header (SignatureHeader) : {
+					Creator: Creator,
+					Nonce: Nonce
+				},
+				Payload (ChaincodeActionPayload) : {
+					ChaincodeProposalPayload: {
+						Input (ChaincodeInvocationSpec): {
+							ChaincodeSpec: {
+								Type: Type,
+								ChaincodeId: {
+									Name: Name
+								},
+								Input (ChaincodeInput): {
+									Args: []
+								}
+							}
+						},
+						TransientMap: nil
+					},
+					Action (ChaincodeEndorsedAction) : {
+						Payload (ProposalResponsePayload): {
+							ProposalHash: ProposalHash,
+							Extension (ChaincodeAction) : {
+								Results (TxRwSet) : {
+									NsRwSets(NsRwSet) : [
+										Namespace: Namespace,
+										KvRwSet : {
+											Reads (KvRead) : [
+												Key: Key,
+												Version: {
+													BlockNum: BlockNum,
+													TxNum: TxNum
+												}
+											],
+											RangeQueriesInfo (RangeQueryInfo) : [
+												StartKey: StartKey,
+												EndKey: EndKey,
+												ItrExhausted: ItrExhausted,
+												ReadsInfo: ReadsInfo
+											],
+											Writes (KVWrite): [
+												Key: Key,
+												IsDelete: IsDelete,
+												Value: Value
+											]
+										}
+									]
+								},
+								Events (ChaincodeEvent) : {
+									ChaincodeId: ChaincodeId,
+									TxId: TxId,
+									EventName: EventName,
+									Payload: Payload
+								},
+								Response: {
+									Status: Status,
+									Message: Message,
+									Payload: Payload
+								},
+								ChaincodeId: ChaincodeId
+							}
+						},
+						Endorsement: [
+							Endorser: Endorser,
+							Signature: Signature
+						]
+					}
+				}
+			]
+		}
+	},
+	Signature: Signature
+}
+
